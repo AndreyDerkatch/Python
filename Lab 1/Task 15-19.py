@@ -26,3 +26,12 @@ def AverageAbs(array):
         return None
 
     return sum(abs(num) for num in array) / len(array)
+
+def NewList(array):
+    # Функция для построения нового списка с элементами, большими среднего и меньшими максимального
+    if not array:
+        return []
+
+    avg = sum(array) / len(array)
+    maxVal = max(array)
+    return [num for num in array if avg < num < maxVal]
