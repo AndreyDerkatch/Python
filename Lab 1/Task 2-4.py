@@ -25,3 +25,17 @@ if IsItPalindrome(string):
     print("Прописные символы образуют палиндром.")
 else:
     print("Прописные символы не образуют палиндром.")
+
+#Задача 14
+# Дана строка в которой записаны слова через пробел. Необходимо упорядочить слова по количеству букв в каждом слове.
+def SortByLength(String):
+    # Разделить строку на слова
+    Words = String.split()
+    # Отсортировать слова по длине с помощью функции sorted и ключа длины слова
+    SortedWords = sorted(Words, key=len)
+    # Вернуть объединенную отсортированную строку
+    return ' '.join(SortedWords)
+
+String = input("Введите строку с словами через пробел: ")
+SortedString = SortByLength(String)
+print("Упорядоченные слова по длине:", SortedString)
