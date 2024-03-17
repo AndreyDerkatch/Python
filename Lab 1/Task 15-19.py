@@ -11,3 +11,11 @@ def SwapMinMax(array):
     array[minIndex], array[maxIndex] = array[maxIndex], array[minIndex]
 
     return array
+
+def CheckMaxInRange(array, a, b):
+    # Функция для проверки наличия максимального элемента массива в заданном интервале
+    if not array:
+        return False
+
+    maxElement = max(array)
+    return a <= maxElement <= b
