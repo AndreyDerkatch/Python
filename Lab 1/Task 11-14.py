@@ -104,3 +104,50 @@ for string in sortedStrings:
 
 #Задача 11
 #Отсортировать строки в порядке квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального среднего веса ASCII-кода тройки символов в первой строке.
+from itertools import combinations
+
+def MeanAsciiTriple(string):
+    # Функция для вычисления среднего ASCII-кода тройки символов в строке
+    return sum(ord(char) for char in string) / len(string)
+
+def MaxMeanTriple(strings):
+    # Функция для вычисления максимального среднего ASCII-кода тройки символов среди всех строк
+    maxMean = 0
+    for string in strings:
+        tripleMean = MeanAsciiTriple(string)
+        if tripleMean > maxMean:
+            maxMean = tripleMean
+    return maxMean
+
+def VarianceMaxMeanTriple(string, maxMean):
+    # Функция для вычисления дисперсии максимального среднего ASCII-кода тройки символов в строке
+    tripleMeans = [sum(ord(char) for char in triple) / 3 for triple in combinations(string, 3)]
+    variance = sum((mean - maxMean) ** 2 for mean in tripleMeans) / len(tripleMeans)
+    return variance
+
+def QuadraticDeviationVariance(strings, maxMeanFirst):
+    # Функция для вычисления квадратичного отклонения дисперсии максимального среднего ASCII-кода тройки символов в строке
+    quadraticDeviations = [VarianceMaxMeanTriple(string, maxMeanFirst) for string in strings]
+    return quadraticDeviations
+
+def SortByQuadraticDeviationVariance(strings, maxMeanFirst):
+    # Функция для сортировки строк по увеличению квадратичного отклонения дисперсии
+    quadraticDeviations = QuadraticDeviationVariance(strings, maxMeanFirst)
+    sortedStrings = [string for _, string in sorted(zip(quadraticDeviations, strings))]
+    return sortedStrings
+
+# Считываем строки с клавиатуры и добавляем их в список
+numOfStrings = int(input("Введите количество строк: "))
+stringsList = [input("Введите строку: ") for _ in range(numOfStrings)]
+
+# Вычисляем максимальное среднее значение ASCII-кода тройки символов в первой строке
+maxMeanFirst = MeanAsciiTriple(stringsList[0])
+
+# Сортируем строки по увеличению квадратичного отклонения дисперсии
+sortedStrings = SortByQuadraticDeviationVariance(stringsList, maxMeanFirst)
+
+# Выводим упорядоченный список строк
+print("Отсортированные строки по увеличению квадратичного отклонения дисперсии:")
+for string in sortedStrings:
+    print(string)
+
