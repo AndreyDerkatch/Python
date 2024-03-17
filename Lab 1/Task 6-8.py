@@ -40,3 +40,21 @@ if MinNumber is not None:
     print("Минимальное натуральное число в строке:", MinNumber)
 else:
     print("В строке нет натуральных чисел.")
+
+#Задача 14
+#Дана строка. Необходимо найти наибольшее количество идущих подряд цифр.
+import re
+
+def FindNumbersInRow(String):
+    # Паттерн для поиска последовательностей цифр
+    pattern = r'\d+'
+    # Найти все последовательности цифр в строке
+    NumbersInRow = re.findall(pattern, String)
+    # Найти последовательность с максимальной длиной
+    MaxNumbersInRow = max(NumbersInRow, key=len, default="")
+
+    return MaxNumbersInRow
+
+String = input("Введите строку: ")
+MaxNumbersInRow = FindNumbersInRow(String)
+print("Наибольшее количество идущих подряд цифр:", MaxNumbersInRow)
