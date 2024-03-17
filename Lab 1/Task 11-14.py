@@ -54,3 +54,53 @@ SortedStrings = SortByMedian(Strings)
 print("Отсортированные строки по медианному значению выборки:")
 for String in SortedStrings:
     print(String)
+
+#Задача 8
+#Отсортировать строки в порядке увеличения квадратичного отклонения между средним весом ASCII-кода символа в строке и максимально среднего ASCII-кода тройки подряд идущих символов в строке. 
+from itertools import combinations
+
+def CalculateMean(lst):
+    # Функция для вычисления среднего значения списка чисел
+    if len(lst) == 0:
+        return 0
+    return sum(lst) / len(lst)
+
+def CalculateMaxMeanTriple(string):
+    # Функция для вычисления максимального среднего значения ASCII-кода тройки символов в строке
+    maxMean = 0
+    # Перебираем все возможные тройки символов в строке
+    for triple in combinations(string, 3):
+        # Вычисляем среднее значение ASCII-кода для тройки символов
+        tripleMean = sum(ord(char) for char in triple) / 3
+        # Если это значение больше текущего максимального, обновляем его
+        if tripleMean > maxMean:
+            maxMean = tripleMean
+    return maxMean
+
+def CalculateQuadraticDeviation(meanAscii, maxMeanTriple):
+    # Функция для вычисления квадратичного отклонения между двумя значениями
+    return (meanAscii - maxMeanTriple) ** 2
+
+def SortByQuadraticDeviation(strings):
+    # Функция для сортировки строк по увеличению квадратичного отклонения между средним весом ASCII-кода символа и максимальным средним ASCII-кодом тройки подряд идущих символов
+    sortedStrings = sorted(strings, key=lambda x: CalculateQuadraticDeviation(CalculateMean([ord(char) for char in x]), CalculateMaxMeanTriple(x)))
+    return sortedStrings
+
+numOfStrings = int(input("Введите количество строк: "))
+stringsList = []
+
+# Считываем строки с клавиатуры и добавляем их в список
+for _ in range(numOfStrings):
+    string = input("Введите строку: ")
+    stringsList.append(string)
+
+# Сортируем строки по увеличению квадратичного отклонения между средним весом ASCII-кода символа и максимальным средним ASCII-кодом тройки подряд идущих символов
+sortedStrings = SortByQuadraticDeviation(stringsList)
+
+# Выводим упорядоченный список строк
+print("Отсортированные строки по увеличению квадратичного отклонения:")
+for string in sortedStrings:
+    print(string)
+
+#Задача 11
+#Отсортировать строки в порядке квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального среднего веса ASCII-кода тройки символов в первой строке.
