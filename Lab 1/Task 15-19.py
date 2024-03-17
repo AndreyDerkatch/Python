@@ -19,3 +19,10 @@ def CheckMaxInRange(array, a, b):
 
     maxElement = max(array)
     return a <= maxElement <= b
+
+def AverageAbs(array):
+    # Функция для вычисления среднего арифметического модулей элементов массива
+    if not array:
+        return None
+
+    return sum(abs(num) for num in array) / len(array)
